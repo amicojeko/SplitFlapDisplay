@@ -11,9 +11,7 @@ This is a simple high level library to drive split flap display letters with Ard
 
 ## Installation
 
-- Go to the Releases page.
-- Download the latest release.
-- Extract the zip file
+- Download [SplitFlapDisplay.zip](https://github.com/amicojeko/SplitFlapDisplay/releases/download/0.0.2/SplitFlapDisplay.zip).
 - In the Arduino IDE, navigate to Sketch > Include Library > Add .ZIP Library
 
 ## Reference
