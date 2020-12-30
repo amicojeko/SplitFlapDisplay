@@ -33,8 +33,6 @@ void setup() {
     ;  // wait for serial port to connect. Needed for native USB
   }
   Serial.begin(115200);
-
-  
 }
 
 void loop() {
@@ -59,40 +57,6 @@ void loop() {
   }
 
   if (digitalRead(RESET_PIN) == LOW) {
-    // display.reset();
-    // display.print("LAAZ");
-    
-    
-    // display.flap();
-    // delay(LONG_NOTE);
-    // display.flap();
-    // delay(LONG_NOTE);
-
-    // display.flap();
-    // delay(SHORT_NOTE);
-    // display.flap();
-    // delay(SHORT_NOTE);
-    // display.flap();
-    // delay(LONG_NOTE);
-
-    // display.flap();
-    // delay(SHORT_NOTE);
-    // display.flap();
-    // delay(SHORT_NOTE);
-    // display.flap();
-    // delay(SHORT_NOTE);
-    // display.flap();
-    // delay(LONG_NOTE);
-
-    // display.flap();
-    // delay(SHORT_NOTE);
-    // display.flap();
-    // delay(LONG_NOTE);
-
-    // delay(5000);
-
-    display.print('2');
+    display.reset();
   }
-
-  // display.print('2');
 }
