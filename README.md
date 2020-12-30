@@ -20,21 +20,21 @@ This is a simple high level library to drive split flap display letters with Ard
 
 `isReady();`
 
-**brief:** Returns false if any of the letters is still flapping.
+Returns false if any of the letters is still flapping.
 
 **returns:** true|false
 
 
 `print(char letter);`
 
-**brief:** Prints the same character on all the display letters.
+Prints the same character on all the display letters.
 
 **note:**
 > The display will only print characters in the ALPHABET array (see SplitFlapLetter.cpp)
 
 `print(char* letter);`
 
-**brief:** Displays the provided char array on the display.
+Displays the provided char array on the display.
            Only the first `lettersNumber` will be displayed, all
            the remaining characters will be ignored. 
            
@@ -43,11 +43,11 @@ This is a simple high level library to drive split flap display letters with Ard
 
 `refresh();`
 
-**brief:** Refresh is intended as refresh in displays. Perhaps I should have called it `tick` or `loop`. By the wai, this is what keeps the display going, it must be called at each Arduino `loop()` iteration.
+Refresh is intended as refresh in displays. Perhaps I should have called it `tick` or `loop`. By the wai, this is what keeps the display going, it must be called at each Arduino `loop()` iteration.
 
 `reset();`
 
-**brief:** Resets all the letters in the display to the first character (usually " ")
+Resets all the letters in the display to the first character (usually " ")
 
 ## Example
 
