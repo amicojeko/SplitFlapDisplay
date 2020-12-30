@@ -41,7 +41,7 @@ Displays the provided char array on the display.
 
 `refresh();`
 
-Refresh is intended as refresh in displays. Perhaps I should have called it `tick` or `loop`. By the wai, this is what keeps the display going, it must be called at each Arduino `loop()` iteration.
+Refresh is intended as refresh in displays. Perhaps I should have called it `tick` or `loop`. By the way, this is what keeps the display going, it must be called at each Arduino `loop()` iteration.
 
 `reset();`
 
