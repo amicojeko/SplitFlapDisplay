@@ -6,6 +6,7 @@
 #ifndef SPLIT_FLAP_LETTER_H
 #define SPLIT_FLAP_LETTER_H
 
+#include <Adafruit_MCP23008.h>
 #include <Arduino.h>
 
 #define STATE_IDLE 0
@@ -27,12 +28,7 @@ class SplitFlapLetter {
     @param  hallPin  arduino pin of the letter's relay
   */
   SplitFlapLetter(int relayPin, int hallPin);
-
-  /*!
-    @brief  SplitFlapLetter initialization. Assigns params to the internal
-            member variables
-  */
-  void init();
+  SplitFlapLetter(int relayPin, int hallPin, Adafruit_MCP23008& mcp);
 
   /*!
     @brief Resets the letter to blank
@@ -53,20 +49,22 @@ class SplitFlapLetter {
   bool isReady();
 
   /*!
-    @brief  Show the provided character, only if present in the ALPHABET array.
+    @brief  Show the provided character, only if present in the ALPHABET
+    array.
     @param  letter the charater to display.
   */
   void print(char letter);
 
   /*!
-    @brief  Flaps the letter. Definitely should be private. It's public only for
-            demo purposes, to manually flap the display and play nice 1 note
+    @brief  Flaps the letter. Definitely should be private. It's public only
+    for demo purposes, to manually flap the display and play nice 1 note
     songs.
   */
   void flap();
 
  private:
   static const char ALPHABET[40];
+  Adafruit_MCP23008 mcp;
 
   byte state;     ///< Internal state, could be STATE_IDLE, STATE_RESET,
                   ///< STATE_PRINTING
@@ -90,7 +88,8 @@ class SplitFlapLetter {
   char currentLetter();
 
   /*!
-    @brief  verifies if the provided character is present it the ALPHABET array
+    @brief  verifies if the provided character is present it the ALPHABET
+    array
     @return true or false
   */
   bool isValidLetter(char letter);

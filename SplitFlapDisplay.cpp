@@ -5,8 +5,10 @@
 
 #include "SplitFlapDisplay.h"
 
-SplitFlapDisplay::SplitFlapDisplay(int lettersNumber, int letterPins[],
-                                   int hallPins[], int flapDelay) {
+SplitFlapDisplay::SplitFlapDisplay() {}
+
+void SplitFlapDisplay::begin(int lettersNumber, int letterPins[], int hallPins[],
+                        int flapDelay, Adafruit_MCP23008& mcp) {
   // here the pointer this->lettersNumber is used to disambiguate from the
   // lettersNumber parameter
   this->lettersNumber = lettersNumber;
@@ -16,14 +18,11 @@ SplitFlapDisplay::SplitFlapDisplay(int lettersNumber, int letterPins[],
 
   // initialize a new SplitFlapLetter object for each letter of the display
   for (int i = 0; i < lettersNumber; i++) {
-    letters[i] = SplitFlapLetter(letterPins[i], hallPins[i]);
+    letters[i] = SplitFlapLetter(letterPins[i], hallPins[i], mcp);
   }
 
-  init();
-}
-
-void SplitFlapDisplay::init() {
   previousMillis = 0;  // reset the internal non blocking delay timer
+
   reset();  // as soon as the display is initialized, resets all the letters
 }
 
@@ -67,6 +66,7 @@ void SplitFlapDisplay::print(char* letter) {
 // milliseconds, so they will run (almost) simultaneously. We also achieve the
 // nice to have side effect of non blocking the host Arduino script.
 void SplitFlapDisplay::refresh() {
+
   unsigned long currentMillis = millis();
 
   if (currentMillis - previousMillis >= flapDelay) {

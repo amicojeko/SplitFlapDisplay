@@ -13,15 +13,23 @@ SplitFlapLetter::SplitFlapLetter(int relayPin, int hallPin) {
   init();
 }
 
-void SplitFlapLetter::init() {
-  pinMode(relayPin, OUTPUT);
-  pinMode(hallPin, INPUT);
+SplitFlapLetter::SplitFlapLetter(int relayPin, int hallPin,
+                                 Adafruit_MCP23008& mcp) {
+  mcp.pinMode(relayPin, OUTPUT);
+  mcp.pinMode(hallPin, INPUT);
+  mcp.pullUp(hallPin, HIGH);
+
+  this->relayPin = relayPin;
+  this->hallPin = hallPin;
+  this->mcp = mcp;
+  init();
 }
 
-// This is hardcoded, and it's a static constant. This means that it's shared
-// among all the istances of SplitFlapLetter. It saves a lot of memory, but in a
-// real world scenario, each letter could have it's own array. In that case,
-// this strategy should be revised as arduino will likely run out of memory.
+// This is hardcoded, and it's a static constant. This means that it's
+// shared among all the istances of SplitFlapLetter. It saves a lot of
+// memory, but in a real world scenario, each letter could have it's own
+// array. In that case, this strategy should be revised as arduino will
+// likely run out of memory.
 const char SplitFlapLetter::ALPHABET[] = {
     ' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'A', 'B', 'C',
     'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
@@ -47,12 +55,11 @@ void SplitFlapLetter::print(char letter) {
 
   // The letter will keep flapping until it reaches the
   // requested character
-  targetLetter = letter; 
+  targetLetter = letter;
   state = STATE_PRINTING;
 }
 
-
-// invoked at each Arduino loop iteration. 
+// invoked at each Arduino loop iteration.
 void SplitFlapLetter::refresh() {
   switch (state) {
     case STATE_IDLE:
@@ -61,9 +68,9 @@ void SplitFlapLetter::refresh() {
       // When the state is STATE_RESET, the letter keeps flapping
       // until the hall sensor is false, meaning that the letter
       // reached the first character (usually " ")
-      // Then the internal position counter currentPosition 
+      // Then the internal position counter currentPosition
       // is set to zero
-      shouldFlap = digitalRead(hallPin);
+      shouldFlap = mcp.digitalRead(hallPin);
       if (!shouldFlap) currentPosition = 0;
       break;
     case STATE_PRINTING:
@@ -87,7 +94,7 @@ void SplitFlapLetter::refresh() {
 void SplitFlapLetter::flap() {
   // inverts the polarity at each flap
   relayState = !relayState;
-  digitalWrite(relayPin, relayState);
+  mcp.digitalWrite(relayPin, relayState);
   incrementPosition();
 }
 

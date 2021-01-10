@@ -6,12 +6,19 @@
 #ifndef SPLIT_FLAP_DISPLAY_H
 #define SPLIT_FLAP_DISPLAY_H
 
+#include <Adafruit_MCP23008.h>
+
 #include "SplitFlapLetter.h"
 
 class SplitFlapDisplay {
  public:
   /*!
     @brief  SplitFlapDisplay constructor
+  */
+  SplitFlapDisplay();
+
+  /*!
+    @brief  initialization function
     @param  lettersNumber the number of the total letters in the display
     @param  letterPins an array containing the relay pins of the single letters
     @param  lettehallPinsrPins an array containing the hall sensor pins of the
@@ -20,13 +27,8 @@ class SplitFlapDisplay {
             be a safe value letters. Shorter times may result in flapping
             failures
   */
-  SplitFlapDisplay(int lettersNumber, int letterPins[], int hallPins[], int flapDelay);
-
-  /*!
-    @brief   SplitFlapDisplay initialization. Automatically reset the display
-    upon initialization.
-  */
-  void init();
+  void begin(int lettersNumber, int letterPins[], int hallPins[], int flapDelay,
+             Adafruit_MCP23008& mcp);
 
   /*!
     @brief Resets the whole display to blank
@@ -37,7 +39,7 @@ class SplitFlapDisplay {
     @brief  Refreshes the whole display. Must be called at each Arduino loop.
   */
   void refresh();
-  
+
   /*!
     @brief  Cycles through all the letters ready state, and returns
             true if all the letters are ready.
@@ -73,10 +75,10 @@ class SplitFlapDisplay {
   void flap(int letter);
 
  private:
-  byte lettersNumber;           ///< Number of letters in the display
-  byte flapDelay;               ///< Delay between flaps
-  unsigned long previousMillis; ///< Used by the internal non-blocking timer
-  SplitFlapLetter letters[64];  ///< Letter objects
+  byte lettersNumber;            ///< Number of letters in the display
+  byte flapDelay;                ///< Delay between flaps
+  unsigned long previousMillis;  ///< Used by the internal non-blocking timer
+  SplitFlapLetter letters[64];   ///< Letter objects
 };
 
 #endif
